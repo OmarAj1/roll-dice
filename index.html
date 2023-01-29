@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .header {
+            text-align: center;
+        }
+        
+        .players-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .player-1,
+        .player-2 {
+            width: 40%;
+            text-align: center;
+        }
+        
+        .player-1-score,
+        .player-2-score {
+            margin-top: 20px;
+        }
+        
+        #dice1,
+        #dice2 {
+            width: 100px;
+            display: none;
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        #roll-btn,
+        #hold {
+            padding: 10px 20px;
+            margin-left: 20px;
+        }
+        
+        .dice {
+            width: 100px;
+            height: 100px;
+            margin: 20px auto;
+            display: flex;
+        }
+        
+        .player {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin: 20px;
+        }
+        
+        .player-current-box {
+            width: 100px;
+            height: 30px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .player-score-box {
+            width: 100px;
+            height: 30px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        .winner {
+            background-color: green;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            margin: 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        #target {
+            width: 100px;
+            height: 30px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #target-number {
+            width: 100px;
+            height: 30px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        #container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .player-name {
+            width: 100px;
+            height: 30px;
+            background-color: #f7f7f7;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .gameover {
+            width: 100px;
+            height: 30px;
+            background-color: red;
+            border-radius: 10px;
+            text-align: center;
+            margin: 10px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .gameover-box {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            top: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>RollDice Game</h1>
+    </div>
+    <div class="players-container">
+        <div class="player-1">
+            <h2>Player 1</h2>
+            <div class="player-1-score">
+                <p>Score: <span id="score-0"></span></p>
+                <p>Current Score: <span id="current-0"></span></p>
+            </div>
+            <img id="dice1" src="dice-1.png" alt="dice1">
+        </div>
+        <div class="player-2">
+            <h2>Player 2</h2>
+            <div class="player-2-score">
+                <p>Score: <span id="score-1"></span></p>
+                <p>Current Score: <span id="current-1"></span></p>
+            </div>
+            <img id="dice2" src="dice-1.png" alt="dice2">
+        </div>
+    </div>
+    <div class="game-controls">
+        <button id="roll-btn">Roll Dice</button>
+        <button id="hold">Hold</button>
+    </div>
+</body>
+
+<script>
+    let player1current = 0;
+    let player2current = 0;
+    let startgame = true;
+    let scores;
+    let activePlayer;
+    activePlayer = 0;
+    let roundScore;
+    let currentScore;
+    let total = 0;
+    scores = [0, 0];
+
+    const player2Total = document.querySelector('.total2');
+    const rollBtn = document.getElementById('roll-btn');
+    const hold = document.getElementById('.hold');
+
+    rollBtn.addEventListener("click", () => {
+
+        if (startgame) {
+            let dice1 = Math.floor(Math.random() * 6) + 1;
+            let dice2 = Math.floor(Math.random() * 6) + 1;
+            document.getElementById('dice1').style.display = 'inline-block';
+            document.getElementById('dice2').style.display = 'inline-block';
+            document.getElementById('dice1').src = 'dice-' + dice1 + '.png';
+            document.getElementById('dice2').src = 'dice-' + dice2 + '.png';
+            if (dice1 !== 1 && dice2 !== 1) {
+                currentScore = dice1 + dice2;
+                total += currentScore;
+                console.log(total)
+                console.log(currentScore)
+                document.querySelector('#current-' + activePlayer).textContent = currentScore;
+                let playerTotal = document.getElementById('score-' + activePlayer).textContent = total;
+            } else if (dice1 === 6 && dice2 === 6) {
+                scores[activePlayer] = 0;
+                document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+                nextPlayer();
+            } else {
+                nextPlayer();
+            }
+        }
+    });
+    let target = prompt('set your target');
+    document.querySelector('#hold').addEventListener('click', () => {
+        if (startgame) {
+            scores[activePlayer] += total;
+            if (scores[activePlayer] >= target) {
+                alert("Player " + (activePlayer + 1) + " wins!");
+                startgame = false;
+            } else {
+                document.querySelector('#score-' + activePlayer).textContent = scores[activePlayer];
+                total = 0;
+                nextPlayer();
+            }
+        }
+    });
+
+    // Function to giving the turn to the next player
+    function nextPlayer() {
+        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+        document.getElementById('current-0').textContent = '0';
+        document.getElementById('current-1').textContent = '0';
+        document.querySelector('.player-0-panel').classList.toggle('active');
+        document.querySelector('.player-1-panel').classList.toggle('active');
+    }
+</script>
+
+</html>
