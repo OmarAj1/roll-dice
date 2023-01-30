@@ -1,0 +1,104 @@
+body {
+    background-color: bisque;
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 20px;
+}
+
+.player-1,
+.player-2 {
+    width: 40%;
+    text-align: center;
+}
+
+.player-1-score,
+.player-2-score {
+    margin-top: 20px;
+}
+
+.game-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#roll-btn,
+#hold {
+    padding: 10px 20px;
+    margin-left: 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    border-radius: 5px;
+    background-color: lightgreen;
+}
+
+#roll-btn:hover,
+#hold:hover {
+    transform: scale(1.1);
+}
+
+.player {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin: 20px;
+}
+
+#dice1,
+#dice2 {
+    margin: 20px;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+}
+
+#dices {
+    display: flex;
+    flex-direction: column;
+    width: 10%;
+    height: 10%;
+    justify-content: space-evenly;
+}
+
+.player-1 {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.player-2 {
+    background-color: white;
+}
+
+.player-1.active {
+    background-color: white;
+}
+
+.player-2.active {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dice {
+    animation: rolling 0.5s ease-in-out;
+}
+
+@keyframes rolling {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
